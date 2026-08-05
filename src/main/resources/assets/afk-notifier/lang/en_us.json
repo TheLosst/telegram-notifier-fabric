@@ -31,5 +31,7 @@
 	"afk-notifier.command.state.on": "enabled",
 	"afk-notifier.command.state.off": "disabled",
 	"afk-notifier.command.usage": "Usage: %s <true|false>",
-	"afk-notifier.command.unknown": "Unknown value \"%s\", expected true or false"
+	"afk-notifier.command.unknown": "Unknown value \"%s\", expected true or false",
+
+	"key.afk-notifier.toggle": "Toggle Telegram notifications"
 }

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.afknotifier.commands.NotificationCommand;
 import ru.afknotifier.events.NotifierEvents;
+import ru.afknotifier.keys.ToggleKeyBinding;
 
 /**
  * Точка входа клиентского мода.
@@ -20,6 +21,7 @@ public class AfkNotifierClient implements ClientModInitializer {
 		ModConfig.get();
 		NotifierEvents.register();
 		NotificationCommand.register();
+		ToggleKeyBinding.register();
 
 		// Пункт 5 ТЗ: при старте мода пишем в лог, что он загрузился.
 		LOGGER.info("AFK Notifier загружен");

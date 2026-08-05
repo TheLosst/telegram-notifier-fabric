@@ -44,7 +44,9 @@ All code is client-only, in `src/client/java/ru/afknotifier/` (Loom `splitEnviro
 - `events/NotifierEvents` — all event wiring.
 - `events/DisconnectReasonHolder` + `mixin/ClientCommonPacketListenerImplMixin` — see below.
 - `gui/ModConfigScreen`, `gui/TestButtonEntry`, `gui/ModMenuIntegration`.
-- `commands/NotificationCommand` — chat toggle for `config.enabled`, see below.
+- `NotificationToggle` — the single place that flips `config.enabled`, saves, and formats the chat feedback. The chat command and the keybind both go through it; put any new toggle entry point here rather than duplicating the logic.
+- `commands/NotificationCommand` — chat toggle, see below.
+- `keys/ToggleKeyBinding` — F6 by default.
 
 ### Event detection
 
@@ -61,6 +63,10 @@ The mod is client-side, so damage is detected by **diffing `player.getHealth()` 
 Tab-completion cannot work for a `#` prefix — the chat suggestion machinery is brigadier, which only parses lines starting with `/`. So the same command is *also* registered as a genuine client command via `ClientCommandRegistrationCallback` + `ClientCommands.literal(...)` (note: `ClientCommands`, not the older `ClientCommandManager`), where `BoolArgumentType` supplies `true`/`false` suggestions for free. Both paths call the same `apply(boolean)`. Keep them in sync when changing behaviour.
 
 Chat output goes through `Minecraft.getInstance().gui.chatListener().handleSystemMessage(component, false)` — in 26.2 there is no `Gui.getChat()`, no `ChatComponent.addMessage`, and no `Player.displayClientMessage`.
+
+### Keybinding
+
+The Fabric module is **`fabric-key-mapping-api-v1`**, not the older key-binding one: `net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper.registerKeyMapping(...)`. In 26.2 `KeyMapping`'s category argument is a `KeyMapping.Category` object (`Category.MISC`, or `Category.register(Identifier)` for a custom one), not a translation-key string. Presses are polled with `consumeClick()` in `END_CLIENT_TICK` — loop with `while`, not `if`, since it yields one queued press per call.
 
 ### Config screen
 

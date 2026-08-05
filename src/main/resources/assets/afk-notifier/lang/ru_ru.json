@@ -31,5 +31,7 @@
 	"afk-notifier.command.state.on": "включены",
 	"afk-notifier.command.state.off": "выключены",
 	"afk-notifier.command.usage": "Использование: %s <true|false>",
-	"afk-notifier.command.unknown": "Не понимаю значение «%s», нужно true или false"
+	"afk-notifier.command.unknown": "Не понимаю значение «%s», нужно true или false",
+
+	"key.afk-notifier.toggle": "Вкл/выкл уведомлений в Telegram"
 }
