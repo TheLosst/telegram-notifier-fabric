@@ -13,6 +13,9 @@ import ru.afknotifier.templates.TemplateManager;
  */
 public class TemplateFileEntry extends ButtonEntry {
 
+	/** Подтверждение «открыт» живёт недолго — читать его после первой секунды незачем. */
+	private static final long CONFIRMATION_TTL_MS = 4000L;
+
 	private final MessageTemplate template;
 
 	public TemplateFileEntry(MessageTemplate template) {
@@ -25,9 +28,11 @@ public class TemplateFileEntry extends ButtonEntry {
 	protected void onPress() {
 		try {
 			TemplateManager.openInEditor(template);
-			setStatus(Component.translatable("afk-notifier.template.opened", template.fileName()), COLOR_OK);
+			setStatus(Component.translatable("afk-notifier.template.opened", template.fileName()),
+					COLOR_OK, CONFIRMATION_TTL_MS);
 		} catch (RuntimeException e) {
 			// Если ОС не смогла открыть файл — подсказываем путь, чтобы дойти руками.
+			// Ошибку не прячем по таймеру: путь надо успеть прочитать и скопировать.
 			AfkNotifierClient.LOGGER.error("Не удалось открыть шаблон {}", template.fileName(), e);
 			setStatus(Component.translatable("afk-notifier.template.failed",
 					TemplateManager.fileOf(template).toString()), COLOR_ERROR);

@@ -31,8 +31,12 @@ public abstract class ButtonEntry extends AbstractConfigListEntry<Void> {
 	protected final Button button;
 	private final List<AbstractWidget> widgets;
 
-	private Component status = Component.empty();
+	/** null — статуса нет и строка не рисуется. */
+	private Component status = null;
 	private int statusColor = COLOR_IDLE;
+
+	/** Момент, когда статус пора убрать. 0 — висит, пока не заменят. */
+	private long statusExpiresAt = 0L;
 
 	protected ButtonEntry(Component fieldName, Component buttonLabel) {
 		super(fieldName, false);
@@ -45,9 +49,20 @@ public abstract class ButtonEntry extends AbstractConfigListEntry<Void> {
 	/** Что делать по нажатию. */
 	protected abstract void onPress();
 
+	/** Статус остаётся на экране, пока его не заменят другим. */
 	protected void setStatus(Component text, int color) {
+		setStatus(text, color, 0L);
+	}
+
+	/**
+	 * @param ttlMillis через сколько статус исчезнет сам; 0 — не исчезает.
+	 *                  Нужно для коротких подтверждений вроде «файл открыт»:
+	 *                  висеть до закрытия экрана им незачем.
+	 */
+	protected void setStatus(Component text, int color, long ttlMillis) {
 		this.status = text;
 		this.statusColor = color;
+		this.statusExpiresAt = ttlMillis > 0 ? System.currentTimeMillis() + ttlMillis : 0L;
 	}
 
 	@Override
@@ -62,7 +77,12 @@ public abstract class ButtonEntry extends AbstractConfigListEntry<Void> {
 		button.setY(y);
 		button.extractRenderState(graphics, mouseX, mouseY, delta);
 
-		if (status != Component.empty()) {
+		if (statusExpiresAt > 0 && System.currentTimeMillis() >= statusExpiresAt) {
+			status = null;
+			statusExpiresAt = 0L;
+		}
+
+		if (status != null) {
 			graphics.text(font, status, x, y + 26, statusColor);
 		}
 	}

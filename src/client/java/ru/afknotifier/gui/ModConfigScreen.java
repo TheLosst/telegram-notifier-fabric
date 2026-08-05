@@ -117,7 +117,7 @@ public final class ModConfigScreen {
 			@Override
 			protected void onPress() {
 				TemplateManager.openDirectory();
-				setStatus(Component.translatable("afk-notifier.template.folder.opened"), COLOR_OK);
+				setStatus(Component.translatable("afk-notifier.template.folder.opened"), COLOR_OK, 4000L);
 			}
 		});
 
