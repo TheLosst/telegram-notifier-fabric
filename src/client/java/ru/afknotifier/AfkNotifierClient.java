@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import ru.afknotifier.commands.NotificationCommand;
 import ru.afknotifier.events.NotifierEvents;
 import ru.afknotifier.keys.ToggleKeyBinding;
+import ru.afknotifier.templates.TemplateManager;
 
 /**
  * Точка входа клиентского мода.
@@ -17,8 +18,10 @@ public class AfkNotifierClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		// Читаем конфиг сразу, чтобы файл появился при первом запуске.
+		// Читаем конфиг и раскладываем шаблоны сразу, чтобы файлы появились
+		// при первом запуске, а не при первом событии.
 		ModConfig.get();
+		TemplateManager.ensureFiles();
 		NotifierEvents.register();
 		NotificationCommand.register();
 		ToggleKeyBinding.register();

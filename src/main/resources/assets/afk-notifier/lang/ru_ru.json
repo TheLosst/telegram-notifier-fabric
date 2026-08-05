@@ -33,5 +33,18 @@
 	"afk-notifier.command.usage": "Использование: %s <true|false>",
 	"afk-notifier.command.unknown": "Не понимаю значение «%s», нужно true или false",
 
-	"key.afk-notifier.toggle": "Вкл/выкл уведомлений в Telegram"
+	"key.afk-notifier.toggle": "Вкл/выкл уведомлений в Telegram",
+
+	"afk-notifier.config.category.templates": "Шаблоны",
+	"afk-notifier.template.hint": "Тексты уведомлений лежат в config/afk-notifier/templates/. Кнопка открывает файл в редакторе; правки применяются сразу, перезаход не нужен. Список подстановок — в README.txt рядом с файлами.",
+	"afk-notifier.template.open": "Открыть файл",
+	"afk-notifier.template.opened": "Открыт %s",
+	"afk-notifier.template.failed": "Не удалось открыть. Файл: %s",
+	"afk-notifier.template.damage": "Урон",
+	"afk-notifier.template.death": "Смерть",
+	"afk-notifier.template.disconnect": "Отключение",
+	"afk-notifier.template.connect": "Подключение",
+	"afk-notifier.template.folder": "Папка с шаблонами",
+	"afk-notifier.template.folder.button": "Открыть папку",
+	"afk-notifier.template.folder.opened": "Папка открыта"
 }

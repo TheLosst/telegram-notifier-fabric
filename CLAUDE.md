@@ -39,7 +39,8 @@ All code is client-only, in `src/client/java/ru/afknotifier/` (Loom `splitEnviro
 
 - `AfkNotifierClient` — `ClientModInitializer`; loads config, registers events, logs on startup.
 - `ModConfig` — Gson model, `config/afk-notifier.json`, accessed as a singleton via `ModConfig.get()`. `canSend()` gates all sending.
-- `Messages` — Telegram message templates (emoji, `dd.MM.yyyy HH:mm:ss` local time).
+- `Messages` — builds notification text; the wording itself lives in user-editable template files, this only supplies placeholder values and the `dd.MM.yyyy HH:mm:ss` timestamp.
+- `templates/MessageTemplate` + `templates/TemplateManager` — see below.
 - `telegram/TelegramClient` — Bot API over `java.net.http.HttpClient`, always `sendAsync`. `send()` returns `CompletableFuture<SendResult>` and **never throws** — errors arrive as a `SendResult`. This return value is what the Test button consumes, so do not turn it into fire-and-forget; `sendAndLog()` is the fire-and-forget wrapper for events.
 - `events/NotifierEvents` — all event wiring.
 - `events/DisconnectReasonHolder` + `mixin/ClientCommonPacketListenerImplMixin` — see below.
@@ -67,6 +68,23 @@ Chat output goes through `Minecraft.getInstance().gui.chatListener().handleSyste
 ### Keybinding
 
 The Fabric module is **`fabric-key-mapping-api-v1`**, not the older key-binding one: `net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper.registerKeyMapping(...)`. In 26.2 `KeyMapping`'s category argument is a `KeyMapping.Category` object (`Category.MISC`, or `Category.register(Identifier)` for a custom one), not a translation-key string. Presses are polled with `consumeClick()` in `END_CLIENT_TICK` — loop with `while`, not `if`, since it yields one queued press per call.
+
+### Message templates
+
+One plain-text file per event under `config/afk-notifier/templates/`, created on init by `TemplateManager.ensureFiles()`. Placeholders are `{name}`; unknown ones are left verbatim so typos are visible in the delivered message. Every placeholder resolves to a non-empty fallback ("не определена", "неизвестен") so a template line never collapses to a dangling label.
+
+Reads are cached and invalidated by file mtime, so edits apply without a restart. A missing or blank file falls back to `MessageTemplate.defaultText()` — templates must never be able to break sending. `README.txt` in that directory is regenerated on every launch from the enum, so add new placeholders there by editing `MessageTemplate` and `TemplateManager.describe(...)`, not by hand.
+
+The test message is deliberately *not* templated — it must stay recognisable when everything else has been rewritten.
+
+### Escaping for the Telegram API
+
+Nothing in a template needs escaping, and that is a property worth preserving:
+
+- The request body is `x-www-form-urlencoded` and the text goes through `URLEncoder.encode`, so `&`, `=`, `%`, `#`, newlines and emoji cannot corrupt the request.
+- **`parse_mode` is deliberately unset.** Text is sent literally, so Markdown/HTML metacharacters (`*`, `_`, `[`, `` ` ``, `<`) are harmless. If anyone ever adds `parse_mode`, user templates immediately become capable of producing `400 can't parse entities`, and escaping must be added in `TelegramClient` at the same time.
+
+`TelegramClient.sanitize()` is the single choke point every send passes through: it strips the text, rejects empty payloads before hitting the network, and truncates at 4096 UTF-16 units (Telegram's limit) without splitting a surrogate pair.
 
 ### Config screen
 

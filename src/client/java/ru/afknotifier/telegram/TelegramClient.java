@@ -25,6 +25,12 @@ public final class TelegramClient {
 			.connectTimeout(Duration.ofSeconds(10))
 			.build();
 
+	/**
+	 * Лимит Telegram на поле text — 4096 символов (UTF-16 code units, то есть
+	 * ровно то, что считает String.length()). Больше — 400 message is too long.
+	 */
+	private static final int MAX_TEXT_LENGTH = 4096;
+
 	private TelegramClient() {
 	}
 
@@ -38,8 +44,21 @@ public final class TelegramClient {
 					SendResult.failure(-1, "Не заполнен токен или chat_id"));
 		}
 
+		String payload = sanitize(text);
+		if (payload.isEmpty()) {
+			// Telegram отвечает 400 message text is empty — незачем ходить в сеть.
+			return CompletableFuture.completedFuture(
+					SendResult.failure(-1, "Пустой текст сообщения"));
+		}
+
+		// Экранирование берёт на себя URL-кодирование тела запроса: &, =, %, #,
+		// переносы строк и эмодзи внутри text сломать запрос не могут.
+		// parse_mode намеренно не задаётся — текст уходит как есть, поэтому
+		// Markdown-символы (* _ [ ] ` и прочие) не требуют экранирования и
+		// не вызывают "can't parse entities". Если когда-нибудь понадобится
+		// разметка, экранировать текст придётся здесь же.
 		String body = "chat_id=" + URLEncoder.encode(chatId, StandardCharsets.UTF_8)
-				+ "&text=" + URLEncoder.encode(text, StandardCharsets.UTF_8);
+				+ "&text=" + URLEncoder.encode(payload, StandardCharsets.UTF_8);
 
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create("https://api.telegram.org/bot" + botToken + "/sendMessage"))
@@ -55,6 +74,30 @@ public final class TelegramClient {
 					AfkNotifierClient.LOGGER.error("Ошибка отправки в Telegram", cause);
 					return SendResult.failure(-1, cause.getClass().getSimpleName() + ": " + cause.getMessage());
 				});
+	}
+
+	/**
+	 * Приводит текст к тому, что Telegram точно примет: убирает пустоту по краям
+	 * и режет по лимиту длины. Шаблоны правит пользователь, так что слишком
+	 * длинный текст — вопрос времени, а обрезанное сообщение лучше отказа.
+	 */
+	private static String sanitize(String text) {
+		if (text == null) {
+			return "";
+		}
+
+		String result = text.strip();
+		if (result.length() <= MAX_TEXT_LENGTH) {
+			return result;
+		}
+
+		int cut = MAX_TEXT_LENGTH - 1;
+		// Не разрезаем суррогатную пару пополам: иначе на конце окажется
+		// «половина» эмодзи и битый символ.
+		if (Character.isHighSurrogate(result.charAt(cut - 1))) {
+			cut--;
+		}
+		return result.substring(0, cut) + "…";
 	}
 
 	/** Разбираем ответ Telegram: поле ok и человекочитаемое description. */

@@ -33,5 +33,18 @@
 	"afk-notifier.command.usage": "Usage: %s <true|false>",
 	"afk-notifier.command.unknown": "Unknown value \"%s\", expected true or false",
 
-	"key.afk-notifier.toggle": "Toggle Telegram notifications"
+	"key.afk-notifier.toggle": "Toggle Telegram notifications",
+
+	"afk-notifier.config.category.templates": "Templates",
+	"afk-notifier.template.hint": "Notification texts live in config/afk-notifier/templates/. The button opens the file in your editor; edits apply immediately, no restart needed. The placeholder list is in README.txt next to the files.",
+	"afk-notifier.template.open": "Open file",
+	"afk-notifier.template.opened": "Opened %s",
+	"afk-notifier.template.failed": "Could not open. File: %s",
+	"afk-notifier.template.damage": "Damage",
+	"afk-notifier.template.death": "Death",
+	"afk-notifier.template.disconnect": "Disconnect",
+	"afk-notifier.template.connect": "Connect",
+	"afk-notifier.template.folder": "Templates folder",
+	"afk-notifier.template.folder.button": "Open folder",
+	"afk-notifier.template.folder.opened": "Folder opened"
 }

@@ -7,6 +7,8 @@ import me.shedaniel.clothconfig2.gui.entries.StringListEntry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import ru.afknotifier.ModConfig;
+import ru.afknotifier.templates.MessageTemplate;
+import ru.afknotifier.templates.TemplateManager;
 
 /**
  * Экран настроек на Cloth Config. Открывается из Mod Menu.
@@ -95,6 +97,29 @@ public final class ModConfigScreen {
 				.setTooltip(Component.translatable("afk-notifier.config.damageThrottleMs.tooltip"))
 				.setSaveConsumer(value -> config.damageThrottleMs = value)
 				.build());
+
+		// --- Шаблоны сообщений ----------------------------------------------
+		ConfigCategory templates = builder.getOrCreateCategory(
+				Component.translatable("afk-notifier.config.category.templates"));
+
+		templates.addEntry(entries
+				.startTextDescription(Component.translatable("afk-notifier.template.hint"))
+				.build());
+
+		// По кнопке открывается сам файл шаблона в редакторе по умолчанию.
+		for (MessageTemplate template : MessageTemplate.values()) {
+			templates.addEntry(new TemplateFileEntry(template));
+		}
+
+		templates.addEntry(new ButtonEntry(
+				Component.translatable("afk-notifier.template.folder"),
+				Component.translatable("afk-notifier.template.folder.button")) {
+			@Override
+			protected void onPress() {
+				TemplateManager.openDirectory();
+				setStatus(Component.translatable("afk-notifier.template.folder.opened"), COLOR_OK);
+			}
+		});
 
 		return builder.build();
 	}

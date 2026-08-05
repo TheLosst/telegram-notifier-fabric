@@ -106,7 +106,7 @@ public final class NotifierEvents {
 			lastDamageSentAt = now;
 
 			// Источник урона в тиковой модели недоступен — ограничиваемся дельтой HP.
-			send(Messages.damage(delta, health, player.getMaxHealth(), null));
+			send(Messages.damage(delta, health, player.getMaxHealth()));
 		}
 	}
 
