@@ -1,3 +1,5 @@
+<img src="art/logo.png" alt="AFK Farm Telegram Notifier" width="160" align="right">
+
 # AFK Farm Telegram Notifier
 
 Клиентский Fabric-мод для **Minecraft 26.2**. Следит за игроком на AFK-ферме

@@ -5,6 +5,7 @@
 	"name": "AFK Farm Telegram Notifier",
 	"description": "Клиентский мод: следит за состоянием игрока на AFK-ферме и шлёт уведомления в Telegram.",
 	"license": "MIT",
+	"icon": "assets/afk-notifier/icon.png",
 	"environment": "client",
 	"entrypoints": {
 		"client": [

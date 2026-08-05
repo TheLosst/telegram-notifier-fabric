@@ -96,5 +96,6 @@ The Test button reads the token/chatId through `Supplier`s bound to the live `St
 
 - **Code comments in Russian.**
 - Lang files live at `src/main/resources/assets/afk-notifier/lang/` — the spec's `src/main/resources/lang/` path is not where Minecraft looks.
+- The mod icon is `src/main/resources/assets/afk-notifier/icon.png`, 128×128, referenced from `fabric.mod.json` as `assets/afk-notifier/icon.png`. The full-size source lives in `art/logo.png`, deliberately **outside** `src/main/resources` — everything under that tree is packed into the jar, and the 720×720 original is larger than the rest of the jar combined. Regenerate the icon from the source rather than editing it directly.
 - The bot token is entered in-game only; never hardcode or commit it.
 - Send failures are logged and never crash the mod or spam in-game chat.

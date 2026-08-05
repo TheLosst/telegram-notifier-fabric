@@ -14,3 +14,6 @@ README.md
 USAGE.md
 SPEC.md
 CLAUDE.md
+
+# Исходник логотипа: в jar идёт уменьшенная копия из src/main/resources.
+art/
