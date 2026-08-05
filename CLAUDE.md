@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Client-side Fabric mod for Minecraft **26.2**. Watches the local player on an AFK farm and sends Telegram notifications on damage, death, connect and disconnect. `readme.md` is the original Russian spec (ТЗ); `USAGE.md` is the build/usage guide.
+Client-side Fabric mod for Minecraft **26.2**. Watches the local player on an AFK farm and sends Telegram notifications on damage, death, connect and disconnect. `SPEC.md` is the original Russian spec (ТЗ); `USAGE.md` is the build/usage guide.
 
 ## Build — Docker only
 
@@ -22,12 +22,12 @@ There is no test framework.
 
 ## Version constraints (MC 26.2) — all verified against Maven, not memory
 
-- **26.2 is not obfuscated, so no mappings are declared at all.** Do not add Yarn, and do *not* add `loom.officialMojangMappings()` — Loom fails with `Failed to find official mojang mappings for 26.2`. The `dependencies` block has no `mappings` line. (`readme.md` says to use official Mojang mappings; that is wrong for 26.2.)
+- **26.2 is not obfuscated, so no mappings are declared at all.** Do not add Yarn, and do *not* add `loom.officialMojangMappings()` — Loom fails with `Failed to find official mojang mappings for 26.2`. The `dependencies` block has no `mappings` line. (`SPEC.md` says to use official Mojang mappings; that is wrong for 26.2.)
 - For the same reason there is nothing to remap, so deps use plain **`implementation`**, not `modImplementation`.
 - Loom plugin id is `net.fabricmc.fabric-loom`, pinned to `1.17.17`.
 - `org.gradle.configuration-cache=false` is required (fabric-loom#1349).
 - Java 25; Gradle 9.5.1; Fabric Loader 0.19.3; Fabric API `0.156.0+26.2`.
-- Cloth Config is `me.shedaniel.cloth:cloth-config-fabric:26.2.155`; Mod Menu is `com.terraformersmc:modmenu:20.0.1`. The `+fabric` / `+26.2` suffixes in `readme.md` are not part of the Maven coordinates.
+- Cloth Config is `me.shedaniel.cloth:cloth-config-fabric:26.2.155`; Mod Menu is `com.terraformersmc:modmenu:20.0.1`. The `+fabric` / `+26.2` suffixes in `SPEC.md` are not part of the Maven coordinates.
 
 Because 26.2 is unobfuscated, Minecraft classes carry **official Mojang names**: `Minecraft`, `LocalPlayer`, `Component`, `Screen`. Note `net.minecraft.resources.Identifier` (not `ResourceLocation`).
 
