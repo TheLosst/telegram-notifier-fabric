@@ -17,10 +17,10 @@
 Готовый мод появится на хосте в:
 
 ```
-build/libs/afk-notifier-1.0.1.jar
+build/libs/afk-notifier-1.1.0.jar
 ```
 
-Рядом лежит `afk-notifier-1.0.1-sources.jar` — он не нужен, в `mods/` кладётся
+Рядом лежит `afk-notifier-1.1.0-sources.jar` — он не нужен, в `mods/` кладётся
 только первый.
 
 ### Что делает build.sh
@@ -64,7 +64,7 @@ docker run --rm -v "$PWD/build/libs:/out" afk-notifier-build
 
 | Мод | Версия |
 |---|---|
-| `afk-notifier-1.0.1.jar` | собранный тут |
+| `afk-notifier-1.1.0.jar` | собранный тут |
 | Fabric API | `0.156.0+26.2` |
 | Cloth Config API | `26.2.155` |
 | Mod Menu | `20.0.1` |
