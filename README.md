@@ -58,7 +58,7 @@ Cloth Config обязателен — без него мод не запусти
 На хосте нужен **только Docker** — ни JDK, ни Gradle ставить не требуется:
 
 ```bash
-./build.sh          # → build/libs/afk-notifier-1.0.0.jar
+./build.sh          # → build/libs/afk-notifier-1.0.1.jar
 ```
 
 Подробности, сборка начисто и запуск без `build.sh` — в

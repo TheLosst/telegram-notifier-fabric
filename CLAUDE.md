@@ -9,7 +9,7 @@ Client-side Fabric mod for Minecraft **26.2**. Watches the local player on an AF
 **The host has no JDK and no Gradle.** Never suggest running `./gradlew` or `java` directly on the host.
 
 ```bash
-./build.sh          # → build/libs/afk-notifier-1.0.0.jar
+./build.sh          # → build/libs/afk-notifier-1.0.1.jar
 ```
 
 `build.sh` bootstraps the Gradle Wrapper into the repo if `gradlew`/`gradle-wrapper.jar` are missing (one-off `gradle:9.5.1-jdk25` container, run in an *empty* dir — running `gradle wrapper` in the project root fails because it tries to configure the Loom build before the wrapper exists). Then it builds the image (`./gradlew build --no-daemon` runs inside) and copies the jar out via a bind-mount on `/out`.
