@@ -70,3 +70,14 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
 	it.options.release = 25
 }
+
+jar {
+	// Кладём лицензию внутрь jar. Имя с суффиксом — чтобы файл не схлопнулся
+	// с чужими LICENSE, если jar'ы будут объединять.
+	def projectName = project.name
+	inputs.property "projectName", projectName
+
+	from("LICENSE") {
+		rename { "${it}_$projectName" }
+	}
+}

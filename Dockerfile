@@ -8,7 +8,7 @@ WORKDIR /app
 # Сначала копируем только файлы сборки — слой переиспользуется,
 # пока не менялись зависимости, и правка исходников не сбрасывает кэш.
 COPY gradle/ gradle/
-COPY gradlew settings.gradle gradle.properties build.gradle ./
+COPY gradlew settings.gradle gradle.properties build.gradle LICENSE ./
 RUN chmod +x gradlew
 
 # Прогреваем wrapper: скачиваем дистрибутив Gradle отдельным слоем.
