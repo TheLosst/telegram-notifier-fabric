@@ -1,0 +1,35 @@
+{
+	"afk-notifier.config.title": "AFK Farm Telegram Notifier",
+
+	"afk-notifier.config.category.general": "General",
+	"afk-notifier.config.category.events": "Events",
+
+	"afk-notifier.config.enabled": "Enable mod",
+	"afk-notifier.config.botToken": "Telegram bot token",
+	"afk-notifier.config.botToken.tooltip": "Get it from @BotFather. Do not show this field on stream or screenshots!",
+	"afk-notifier.config.chatId": "Chat ID",
+	"afk-notifier.config.chatId.tooltip": "Where to send messages. Group chat IDs may be negative.",
+
+	"afk-notifier.config.test": "Connection test",
+	"afk-notifier.config.test.button": "Send test message",
+	"afk-notifier.config.test.empty": "Fill in the token and chat_id",
+	"afk-notifier.config.test.sending": "Sending...",
+	"afk-notifier.config.test.ok": "Test passed, message sent",
+	"afk-notifier.config.test.fail": "Error %s: %s",
+
+	"afk-notifier.config.notifyOnDamage": "Notify on damage",
+	"afk-notifier.config.notifyOnDeath": "Notify on death",
+	"afk-notifier.config.notifyOnDisconnect": "Notify on disconnect",
+	"afk-notifier.config.notifyOnConnect": "Notify on connect",
+	"afk-notifier.config.damageThrottleMs": "Damage throttle (ms)",
+	"afk-notifier.config.damageThrottleMs.tooltip": "Minimum interval between damage messages. Prevents spam from poison and fire.",
+
+	"afk-notifier.command.on": "Notifications enabled",
+	"afk-notifier.command.off": "Notifications disabled",
+	"afk-notifier.command.on.nocreds": "Notifications enabled, but the token or chat_id is empty — nothing will be sent",
+	"afk-notifier.command.status": "Notifications are currently: %s",
+	"afk-notifier.command.state.on": "enabled",
+	"afk-notifier.command.state.off": "disabled",
+	"afk-notifier.command.usage": "Usage: %s <true|false>",
+	"afk-notifier.command.unknown": "Unknown value \"%s\", expected true or false"
+}

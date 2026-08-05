@@ -1,0 +1,72 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version '1.17.17'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+loom {
+	// Клиентский код живёт в отдельном sourceSet src/client/java.
+	splitEnvironmentSourceSets()
+
+	mods {
+		"afk-notifier" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+}
+
+repositories {
+	maven {
+		name = 'Shedaniel'
+		url = 'https://maven.shedaniel.me/'
+	}
+	maven {
+		name = 'TerraformersMC'
+		url = 'https://maven.terraformersmc.com/releases/'
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+	// Начиная с 26.2 Minecraft не обфусцирован: маппинги (ни Yarn, ни официальные
+	// Mojang) не объявляются вообще. Loom падает с "Failed to find official mojang
+	// mappings for 26.2", если сюда добавить loom.officialMojangMappings().
+	// По той же причине зависимости идут через implementation, а не modImplementation —
+	// ремапить нечего.
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// Cloth Config тянет свою копию Fabric API — исключаем, чтобы не конфликтовала.
+	implementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+	implementation("com.terraformersmc:modmenu:${project.modmenu_version}") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+}
+
+processResources {
+	inputs.property "version", project.version
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = "UTF-8"
+	it.options.release = 25
+}

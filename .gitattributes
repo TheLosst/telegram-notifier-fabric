@@ -1,0 +1,11 @@
+# Скрипты, которые выполняются внутри Linux-контейнера, обязаны иметь LF.
+# С CRLF ./gradlew падает с "bad interpreter".
+gradlew    text eol=lf
+*.sh       text eol=lf
+
+# Windows-скрипты — наоборот, CRLF.
+*.bat      text eol=crlf
+
+# Бинарники не трогать.
+*.jar      binary
+*.png      binary

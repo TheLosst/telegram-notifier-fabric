@@ -1,0 +1,33 @@
+{
+	"schemaVersion": 1,
+	"id": "afk-notifier",
+	"version": "${version}",
+	"name": "AFK Farm Telegram Notifier",
+	"description": "Клиентский мод: следит за состоянием игрока на AFK-ферме и шлёт уведомления в Telegram.",
+	"license": "MIT",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"ru.afknotifier.AfkNotifierClient"
+		],
+		"modmenu": [
+			"ru.afknotifier.gui.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		{
+			"config": "afk-notifier.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*",
+		"cloth-config": "*"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}

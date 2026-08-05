@@ -1,0 +1,12 @@
+# Ничего локального в контекст сборки не тащим.
+.gradle/
+build/
+run/
+.git/
+.idea/
+*.iml
+.dockerignore
+Dockerfile
+build.sh
+readme.md
+CLAUDE.md

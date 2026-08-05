@@ -1,0 +1,18 @@
+# Gradle
+.gradle/
+build/
+
+# Дев-рантайм Minecraft (там же лежит config с токеном — в репу не нужен)
+run/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# ОС
+.DS_Store
+Thumbs.db

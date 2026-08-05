@@ -1,0 +1,35 @@
+{
+	"afk-notifier.config.title": "AFK Farm Telegram Notifier",
+
+	"afk-notifier.config.category.general": "Основное",
+	"afk-notifier.config.category.events": "События",
+
+	"afk-notifier.config.enabled": "Включить мод",
+	"afk-notifier.config.botToken": "Токен Telegram-бота",
+	"afk-notifier.config.botToken.tooltip": "Получить у @BotFather. Не показывайте это поле на стриме и скриншотах!",
+	"afk-notifier.config.chatId": "Chat ID",
+	"afk-notifier.config.chatId.tooltip": "Кому слать сообщения. Для групп значение бывает отрицательным.",
+
+	"afk-notifier.config.test": "Проверка связи",
+	"afk-notifier.config.test.button": "Отправить тестовое сообщение",
+	"afk-notifier.config.test.empty": "Заполните токен и chat_id",
+	"afk-notifier.config.test.sending": "Отправляю...",
+	"afk-notifier.config.test.ok": "Тест пройден, сообщение отправлено",
+	"afk-notifier.config.test.fail": "Ошибка %s: %s",
+
+	"afk-notifier.config.notifyOnDamage": "Уведомлять об уроне",
+	"afk-notifier.config.notifyOnDeath": "Уведомлять о смерти",
+	"afk-notifier.config.notifyOnDisconnect": "Уведомлять об отключении",
+	"afk-notifier.config.notifyOnConnect": "Уведомлять о подключении",
+	"afk-notifier.config.damageThrottleMs": "Троттлинг урона (мс)",
+	"afk-notifier.config.damageThrottleMs.tooltip": "Минимальный интервал между сообщениями об уроне. Защищает от спама при яде и горении.",
+
+	"afk-notifier.command.on": "Уведомления включены",
+	"afk-notifier.command.off": "Уведомления выключены",
+	"afk-notifier.command.on.nocreds": "Уведомления включены, но токен или chat_id не заданы — отправка не пойдёт",
+	"afk-notifier.command.status": "Уведомления сейчас: %s",
+	"afk-notifier.command.state.on": "включены",
+	"afk-notifier.command.state.off": "выключены",
+	"afk-notifier.command.usage": "Использование: %s <true|false>",
+	"afk-notifier.command.unknown": "Не понимаю значение «%s», нужно true или false"
+}
